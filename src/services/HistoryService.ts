@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { AbstractService } from "./AbstractService";
-import type { DrawHistoryPayload } from '@/services/types/DrawHistoryPayload';
-import type { LotteryId } from "./types/LotteryId";
+import type { DrawHistoryPayload } from '@/types/DrawHistoryPayload';
+import type { LotteryId } from "../types/LotteryId";
 
 export class HistoryService extends AbstractService {
     async fetch(licensedTerritory: string = 'US-NJ', limit: number = 4, offset: number = 0, lotteries: LotteryId[] = []): Promise<DrawHistoryPayload> {

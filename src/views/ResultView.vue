@@ -2,6 +2,7 @@
 import { ref, type Ref, watch } from 'vue';
 import { HistoryService } from '@/services/HistoryService';
 import type { DrawHistoryPayload } from '@/services/types/DrawHistoryPayload';
+import ResultItem from '@/components/ResultItem.vue';
 
 const results: Ref<DrawHistoryPayload> = ref({draws: []});
 const history = new HistoryService();
@@ -42,10 +43,18 @@ loadMore()
       <option value="US-NY">New York</option>
       <option value="US-TX">Texas</option>
     </select>
-    <div v-for="item of results.draws">
-      {{ item.id }}
-    </div>
+    <template v-if="results.draws.length">
+      <ResultItem v-for="item of results.draws" :key="item.id" :item="item"></ResultItem>
+      <button @click="offset+=limit">Load more ...</button>
+    </template>
+    <p v-else>loading ...</p>
 
-    <button @click="offset+=limit">Load more ...</button>
+    
   </main>
 </template>
+
+<style scope>
+main {
+  padding-bottom: 3rem;
+}
+</style>
