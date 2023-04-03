@@ -6,7 +6,7 @@ import ResultItem from '@/components/ResultItem.vue';
 
 const results: Ref<DrawHistoryPayload> = ref({draws: []});
 const history = new HistoryService();
-const limit = 4;
+const limit = 12;
 const offset = ref(0);
 const region = ref('US-NJ')
 
@@ -44,7 +44,9 @@ loadMore()
       <option value="US-TX">Texas</option>
     </select>
     <template v-if="results.draws.length">
-      <ResultItem v-for="item of results.draws" :key="item.id" :item="item"></ResultItem>
+      <div class="result-list">
+        <ResultItem v-for="item of results.draws" :key="item.id" :item="item"></ResultItem>
+      </div>
       <button @click="offset+=limit">Load more ...</button>
     </template>
     <p v-else>loading ...</p>
@@ -53,8 +55,34 @@ loadMore()
   </main>
 </template>
 
-<style scope>
+<style scope lang="scss">
 main {
   padding-bottom: 3rem;
 }
+
+.result-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0 3rem;
+  }  
+
+
+  button {
+
+    --brightness: 27%;
+
+    cursor: pointer;
+    background-color: hsl(160, 100%, var(--brightness));
+    border: 0;
+    padding: 1rem;
+    color: #fff;
+
+    &:hover {
+      --brightness: 37%
+    }
+  }
+
+
+
 </style>

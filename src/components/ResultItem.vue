@@ -2,7 +2,7 @@
 
     <article class="result-item">
         <h1 class="result-item__headline">POWERBALL</h1>
-        <p>{{ dateTime }}</p>
+        <p class="result-item__date-time">{{ dateTime }}</p>
         <ul v-for="drawnNumbers of item.drawnNumbers" class="result-item__number-list">
             <template v-for="numbers of drawnNumbers.numbers">
             <li v-for="value of numbers.values" class="result-item__number" :class="'result-item__number--'+numbers.name.toLocaleLowerCase()">{{ value }}</li>
@@ -42,15 +42,27 @@ export default defineComponent({
 <style scoped lang="scss">
 .result-item {
 
-    background-color: #eee;
-    margin-bottom: 3rem;
+    --hue: 160;
+    --saturation: 100%;
+    --brightness: 37%;
+
+    background-color: hsla(var(--hue), var(--saturation), var(--brightness), .1);
     padding: 1rem;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
-    border: 1px solid #ccc;
-    color: rgb(110, 110, 110);
+    border: 1px solid hsla(var(--hue), var(--saturation), var(--brightness), 1);
+    color: #eee;
+
+    width: 100%;
+
+    @media (min-width: 1024px) {
+        width: calc(25% - .75rem);
+    }
+
+    &__date-time {
+        font-size: 0.7rem;
+        padding: 0 0 1rem 0;
+    }
 
     &__number {
-        background-color: #eee;
         border-radius: 50%;
         display: flex;
         width: 2rem;
@@ -61,7 +73,7 @@ export default defineComponent({
         margin: .1rem;
         
         &--base {
-            background-color: #c4d1f4;
+            background-color: hsla(var(--hue), var(--saturation), var(--brightness), .5);
         }
         
         &--extra {
