@@ -1,7 +1,29 @@
+<template>
+  <main>
+    <select v-model="region">
+      <option value="US-AR">Arkansas</option>
+      <option value="US-CO">Colorado</option>
+      <option value="US-MN">Minnesota</option>
+      <option value="US-NJ">New Jersey</option>
+      <option value="US-NY">New York</option>
+      <option value="US-TX">Texas</option>
+    </select>
+    <template v-if="results.draws.length">
+      <div class="result-list">
+        <ResultItem v-for="item of results.draws" :key="item.id" :item="item"></ResultItem>
+      </div>
+      <button @click="() => offset+=limit">Mehr laden ...</button>
+    </template>
+    <p v-else class="loading">Daten werden geladen ...</p>
+
+    
+  </main>
+</template>
+
 <script setup lang="ts">
 import { ref, type Ref, watch } from 'vue';
 import { HistoryService } from '@/services/HistoryService';
-import type { DrawHistoryPayload } from '@/services/types/DrawHistoryPayload';
+import type { DrawHistoryPayload } from '@/types/DrawHistoryPayload';
 import ResultItem from '@/components/ResultItem.vue';
 
 const results: Ref<DrawHistoryPayload> = ref({draws: []});
@@ -32,29 +54,6 @@ loadMore()
 
 </script>
 
-
-<template>
-  <main>
-    <select v-model="region">
-      <option value="US-AR">Arkansas</option>
-      <option value="US-CO">Colorado</option>
-      <option value="US-MN">Minnesota</option>
-      <option value="US-NJ">New Jersey</option>
-      <option value="US-NY">New York</option>
-      <option value="US-TX">Texas</option>
-    </select>
-    <template v-if="results.draws.length">
-      <div class="result-list">
-        <ResultItem v-for="item of results.draws" :key="item.id" :item="item"></ResultItem>
-      </div>
-      <button @click="offset+=limit">Load more ...</button>
-    </template>
-    <p v-else>loading ...</p>
-
-    
-  </main>
-</template>
-
 <style scope lang="scss">
 main {
   padding-bottom: 3rem;
@@ -65,24 +64,24 @@ main {
     flex-wrap: wrap;
     gap: 1rem;
     margin: 1rem 0 3rem;
-  }  
+}  
 
+button {
+  --brightness: 27%;
 
-  button {
+  cursor: pointer;
+  background-color: hsl(160, 100%, var(--brightness));
+  border: 0;
+  padding: 1rem;
+  color: #fff;
 
-    --brightness: 27%;
-
-    cursor: pointer;
-    background-color: hsl(160, 100%, var(--brightness));
-    border: 0;
-    padding: 1rem;
-    color: #fff;
-
-    &:hover {
-      --brightness: 37%
-    }
+  &:hover {
+    --brightness: 37%
   }
+}
 
-
+.loading {
+  padding: 1rem 0;
+}
 
 </style>

@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import type { FinishedDrawPayload } from '@/services/types/FinishedDrawPayload';
+import type { FinishedDrawPayload } from '@/types/FinishedDrawPayload';
 import type { PropType } from 'vue'
 import { defineComponent, computed } from 'vue'
 import moment from 'moment';
@@ -47,8 +47,8 @@ export default defineComponent({
     --brightness: 37%;
 
     background-color: hsla(var(--hue), var(--saturation), var(--brightness), .1);
-    padding: 1rem;
     border: 1px solid hsla(var(--hue), var(--saturation), var(--brightness), 1);
+    padding: 1rem;
     color: #eee;
 
     width: 100%;
